@@ -1,0 +1,156 @@
+/* Roomi · site · peça "Como o Cubo trabalha" (prefixo fluxo), portada do slide 16 do deck (p7b).
+   Desktop (>= 1100px): o palco do deck (1720×620) inteiro, escalado pela largura do contêiner com
+   transform:scale(var(--escala)); o js/fluxo.js mede a largura (ResizeObserver) e põe --escala.
+   Abaixo de 1100px: coluna própria (fontes, relógio + Cubo, saídas), sem fios.
+   A carga: o JS põe .fluxo-carga na raiz às 06:00 e às 14:00 do relógio (fora disso, tudo calmo). */
+
+.fluxo{--escala:.75;position:relative;width:100%;color:var(--tinta);font-family:var(--sans)}
+.fluxo button{font-family:var(--sans)}
+.fluxo-legenda i{display:inline-block;flex:none;width:12px;height:12px;border-radius:50%;background:var(--laranja)}
+
+/* ——— peças comuns aos dois layouts ——— */
+.fluxo-cab{font-size:20px;font-weight:700;letter-spacing:.16em;color:var(--cinza);line-height:26px}
+.fluxo-chip{box-sizing:border-box;margin:0;border:2px solid var(--tinta);border-radius:36px;background:var(--branco);color:var(--tinta);font-weight:600;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;transition:opacity var(--t),background-color var(--t),border-color var(--t),transform var(--t)}
+.fluxo-chip svg{flex:none;display:block}
+.fluxo-chip span{flex:1;min-width:0;line-height:1.05}
+.fluxo-chip small{display:block;margin-top:4px;font-weight:500;color:var(--cinza);letter-spacing:.01em}
+.fluxo-chip i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--laranja)}
+.fluxo-chip:hover{border-color:var(--laranja)}
+.fluxo-saida{position:relative;box-sizing:border-box;margin:0;border:0;background:transparent;color:var(--tinta);display:flex;align-items:center;cursor:pointer;text-align:left;transition:opacity var(--t),background-color var(--t)}
+.fluxo-saida + .fluxo-saida::before{content:"";position:absolute;right:0;top:-1px;height:1.5px;background:rgba(29,29,27,.25)}
+.fluxo-saida svg{flex:none;display:block}
+.fluxo-saida b{display:block;line-height:1.1;letter-spacing:-.01em}
+.fluxo-saida b span:first-child{font-weight:800;text-transform:uppercase}
+.fluxo-saida b em,.fluxo-rotulo em{font-family:var(--serif);font-style:italic;font-weight:800;font-variation-settings:"opsz" 144;color:var(--laranja)}
+.fluxo-saida small{display:block;color:var(--cinza)}
+.fluxo-relogio{box-sizing:border-box;display:flex;align-items:center;justify-content:center;border-radius:999px;background:var(--branco);border:1.5px solid rgba(29,29,27,.25);font-weight:600;color:var(--tinta);white-space:nowrap}
+.fluxo-relogio svg{flex:none;display:block}
+.fluxo-relogio small{font-weight:500;color:var(--cinza);letter-spacing:.04em}
+.fluxo-relogio small.fluxo-agora{color:var(--laranja);font-weight:700}
+.fluxo-hora{font-variant-numeric:tabular-nums}
+.fluxo-ponteiro-h{transform-origin:12px 12px;transform:rotate(180deg)}
+.fluxo-ponteiro-m{transform-origin:12px 12px}
+.fluxo-rotulo{line-height:1;letter-spacing:-.01em;white-space:nowrap}
+.fluxo-rotulo > span{font-weight:800;text-transform:uppercase}
+.fluxo-sub{color:var(--cinza)}
+.fluxo-cubo{transform-box:fill-box;transform-origin:center}
+.fluxo-brilho{opacity:.6}
+
+/* fios e partículas (só aparecem no palco do desktop) */
+.fluxo-fio{fill:none;stroke:var(--tinta);stroke-width:2;stroke-opacity:.32;stroke-linecap:round;stroke-dasharray:100 100;stroke-dashoffset:0;transition:stroke var(--t),stroke-width var(--t),stroke-opacity var(--t),opacity var(--t)}
+.fluxo-fio-s{stroke:var(--laranja);stroke-width:3;stroke-opacity:1}
+.fluxo-part{fill:none;stroke:var(--laranja);stroke-width:11;stroke-linecap:round;stroke-dasharray:.1 150;opacity:0}
+.fluxo-corre{fill:none;stroke:var(--branco);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.1 11;opacity:0;transition:opacity var(--t)}
+.fluxo-porta{fill:var(--tinta)}
+.fluxo-porta-s{fill:var(--laranja)}
+
+/* legenda (abaixo do palco; vazia = some, sem pular a página) */
+.fluxo-legenda{display:flex;align-items:center;justify-content:center;gap:12px;min-height:48px;margin-top:clamp(8px,1.2vw,20px);padding:0 8px;font-size:clamp(16px,1.45vw,22px);line-height:1.35;color:var(--cinza);text-align:center}
+.fluxo-legenda b{color:var(--tinta);font-weight:800}
+.fluxo-legenda.fluxo-cheia{color:var(--tinta)}
+.fluxo-legenda:has(> span:empty){visibility:hidden}
+
+/* seleção: realça um caminho e apaga o resto */
+.fluxo-foco .fluxo-chip:not(.fluxo-on),.fluxo-foco .fluxo-saida:not(.fluxo-on){opacity:.38}
+.fluxo-foco .fluxo-fio:not(.fluxo-on){opacity:.14}
+.fluxo-foco .fluxo-fio.fluxo-on{stroke:var(--laranja);stroke-width:6;stroke-opacity:1}
+.fluxo-foco .fluxo-corre.fluxo-on{opacity:1}
+.fluxo-chip.fluxo-on{border-color:var(--laranja);background:var(--pessego-2);transform:translateX(6px)}
+.fluxo-saida.fluxo-on{background:var(--pessego-2)}
+
+/* ——— desktop: o palco do deck, escalado ——— */
+@media (min-width:1100px){
+  .fluxo-quadro{position:relative;width:100%;height:calc(620px * var(--escala));overflow:visible}
+  .fluxo-palco{position:absolute;left:0;top:0;width:1720px;height:620px;transform:scale(var(--escala));transform-origin:0 0}
+  .fluxo-svg{position:absolute;left:0;top:0;width:1720px;height:620px;max-width:none;overflow:visible;pointer-events:none}
+  .fluxo-cab{position:absolute;top:0}
+  .fluxo-cab-e{left:0}
+  .fluxo-cab-s{left:1220px}
+  .fluxo-fontes{position:absolute;left:0;top:44px;width:520px;display:flex;flex-direction:column;gap:24px}
+  .fluxo-chip{width:520px;height:72px;padding:0 24px 0 22px;font-size:26px}
+  .fluxo-chip span{white-space:nowrap}
+  .fluxo-chip small{font-size:20px}
+  .fluxo-saidas{position:absolute;left:1200px;top:32px;width:520px;display:flex;flex-direction:column}
+  .fluxo-saida{width:520px;height:96px;padding:0 0 0 20px;border-radius:var(--raio-p);gap:18px}
+  .fluxo-saida + .fluxo-saida::before{left:20px}
+  .fluxo-saida b{font-size:27px;white-space:nowrap}
+  .fluxo-saida small{margin-top:5px;font-size:18px;line-height:1.2;white-space:nowrap}
+  /* o centro cobre o recorte do Cubo (590..1130 × 50..590 do palco) */
+  .fluxo-centro{position:absolute;left:590px;top:50px;width:540px;height:540px;pointer-events:none}
+  .fluxo-cubo-svg{position:absolute;left:0;top:0;width:540px;height:540px;max-width:none;overflow:visible}
+  .fluxo-relogio{position:absolute;z-index:1;left:50px;top:48px;width:440px;height:46px;gap:10px;padding:0 16px;font-size:24px}
+  .fluxo-relogio small{margin-left:4px;font-size:20px}
+  .fluxo-dia{min-width:40px}
+  .fluxo-hora{min-width:66px}
+  .fluxo-rot{min-width:196px}
+  .fluxo-rotulo{position:absolute;left:270px;top:446px;transform:translateX(-50%);font-size:36px}
+  .fluxo-sub{position:absolute;left:270px;top:492px;transform:translateX(-50%);font-size:21px;white-space:nowrap}
+  .fluxo-legenda{white-space:nowrap}
+}
+
+/* ——— abaixo de 1100px: coluna própria, sem fios ——— */
+@media (max-width:1099.98px){
+  .fluxo-palco{display:flex;flex-direction:column;gap:14px}
+  .fluxo-svg{display:none}
+  .fluxo-cab{display:block;font-size:13px;line-height:18px;margin-top:10px}
+  .fluxo-cab-e{order:1}
+  .fluxo-fontes{order:2}
+  .fluxo-centro{order:3}
+  .fluxo-cab-s{order:4;margin-top:6px}
+  .fluxo-saidas{order:5}
+  .fluxo-fontes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}
+  .fluxo-chip{width:100%;min-height:62px;padding:10px 18px 10px 16px;gap:12px;font-size:18px}
+  .fluxo-chip svg{width:26px;height:26px}
+  .fluxo-chip small{font-size:14px;line-height:1.25}
+  .fluxo-chip.fluxo-on{transform:none}
+  .fluxo-centro{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px;text-align:center}
+  .fluxo-cubo-svg{width:min(300px,82%);height:auto;margin:-46px 0 -50px}
+  .fluxo-relogio{position:relative;z-index:1;display:inline-flex;height:40px;gap:7px;padding:0 14px;font-size:17px}
+  .fluxo-relogio svg{width:22px;height:22px}
+  .fluxo-relogio small{margin-left:2px;font-size:13.5px}
+  .fluxo-dia{min-width:30px}
+  .fluxo-hora{min-width:46px}
+  .fluxo-rot{min-width:132px;text-align:left}
+  .fluxo-rotulo{position:relative;font-size:30px}
+  .fluxo-sub{font-size:15px;line-height:1.35}
+  .fluxo-saidas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}
+  .fluxo-saida{width:100%;min-height:76px;padding:12px 8px 12px 6px;gap:14px;border-radius:var(--raio-p)}
+  .fluxo-saida + .fluxo-saida::before{left:6px}
+  .fluxo-saida svg{width:30px;height:30px}
+  .fluxo-saida b{font-size:19px}
+  .fluxo-saida small{margin-top:4px;font-size:14px;line-height:1.3}
+  /* legenda: cartão escuro que acompanha a rolagem enquanto há algo escolhido */
+  .fluxo-legenda{position:sticky;bottom:12px;z-index:2;justify-content:flex-start;text-align:left;min-height:0;margin-top:14px;padding:14px 18px;border-radius:var(--raio-p);background:var(--tinta);color:var(--creme);font-size:15px}
+  .fluxo-legenda.fluxo-cheia{color:var(--creme)}
+  .fluxo-legenda b{color:var(--creme)}
+  .fluxo-legenda:has(> span:empty){display:none}
+}
+@media (max-width:720px){
+  .fluxo-fontes,.fluxo-saidas{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:721px) and (max-width:1099.98px){
+  /* duas colunas: o fio separador só entre linhas, não no topo da 2ª coluna */
+  .fluxo-saida:nth-child(2)::before{display:none}
+}
+
+/* ——— a carga ——— */
+@media (prefers-reduced-motion:no-preference){
+  .fluxo-foco .fluxo-corre.fluxo-on{animation:fluxo-escorre .9s linear infinite}
+  .fluxo-carga .fluxo-fio-e{animation:fluxo-aviva 1.5s ease-in-out;animation-delay:calc(var(--i)*.05s)}
+  .fluxo-carga .fluxo-part-a{animation:fluxo-passa 1.05s cubic-bezier(.45,.05,.55,.95) both;animation-delay:calc(var(--i)*.06s)}
+  .fluxo-carga .fluxo-part-b{animation:fluxo-passa 1.05s cubic-bezier(.45,.05,.55,.95) both;animation-delay:calc(.28s + var(--i)*.06s)}
+  .fluxo-carga .fluxo-chip i{animation:fluxo-confere .5s ease-out;animation-delay:calc(var(--i)*.06s)}
+  .fluxo-carga .fluxo-cubo{animation:fluxo-pulsa .9s ease-out 1.15s}
+  .fluxo-carga .fluxo-brilho{animation:fluxo-halo 1.3s ease-out 1.15s}
+  .fluxo-carga .fluxo-part-s{animation:fluxo-passa .8s ease-out both;animation-delay:calc(1.55s + var(--i)*.12s)}
+  .fluxo-carga .fluxo-saida{animation:fluxo-recebe 1s ease-out;animation-delay:calc(2.15s + var(--i)*.12s)}
+  .fluxo-carga .fluxo-relogio{animation:fluxo-marca 2.2s ease-out}
+}
+@keyframes fluxo-aviva{0%,100%{stroke:#1D1D1B;stroke-opacity:.32}35%,65%{stroke:#F97B55;stroke-opacity:.75}}
+@keyframes fluxo-confere{0%{transform:scale(1)}40%{transform:scale(1.6)}100%{transform:scale(1)}}
+@keyframes fluxo-passa{0%{stroke-dashoffset:0;opacity:0}12%{opacity:1}86%{opacity:1}100%{stroke-dashoffset:-100;opacity:0}}
+@keyframes fluxo-escorre{from{stroke-dashoffset:0}to{stroke-dashoffset:-11.1}}
+@keyframes fluxo-pulsa{0%{transform:none;filter:none}40%{transform:scale(1.04);filter:brightness(1.08) saturate(1.1)}100%{transform:none;filter:none}}
+@keyframes fluxo-halo{0%{opacity:.6}40%{opacity:1}100%{opacity:.6}}
+@keyframes fluxo-recebe{0%{background-color:rgba(252,228,218,0)}30%{background-color:#FCE4DA}100%{background-color:rgba(252,228,218,0)}}
+@keyframes fluxo-marca{0%{border-color:rgba(29,29,27,.25)}20%,70%{border-color:#F97B55}100%{border-color:rgba(29,29,27,.25)}}

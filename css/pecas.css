@@ -1,0 +1,10 @@
+/* Ajustes das peças interativas (mapa, cronograma, fluxo do Cubo, calculadora) no site v3. */
+
+/* cronograma dentro do cartão creme: sem moldura dupla */
+.crono .gantt{background:transparent}
+
+/* fluxo do Cubo dentro da moldura creme, na seção escura */
+.fluxo-moldura .fluxo{color:var(--tinta)}
+
+/* janela do Cubo: sem JS, as telas empilham */
+html:not(.js) .janela-tela{aspect-ratio:auto}

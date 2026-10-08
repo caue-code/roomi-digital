@@ -1,0 +1,160 @@
+/* calc · Calculadora de valor (deck institucional, slide 19 "Quanto a Roomi vale pra você?")
+   Mesma estrutura do deck: "Seu hotel" (1.4fr) + 3 cenários; cabeçalhos em cima.
+   1100px: hotel em cima ocupando a largura, cenários em 3 abaixo. 720px: tudo empilhado. */
+
+.calc{width:100%;font-family:var(--sans);color:var(--tinta)}
+.calc-main{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));grid-template-rows:auto auto;gap:12px clamp(14px,1.4vw,22px)}
+
+/* ——— cabeçalhos ——— */
+.calc-cab{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;padding:0 4px;min-height:36px}
+.calc-cab-dir{grid-column:2 / 5}
+.calc-tit{margin:0;font-size:15px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.calc-tit span{color:var(--laranja)}
+.calc-tit .calc-tit-sub{color:var(--cinza);letter-spacing:0;text-transform:none;font-weight:600;font-size:14px}
+.calc-ctrl{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--cinza)}
+.calc-bt{font-family:inherit;font-size:14px;font-weight:600;color:var(--cinza);background:transparent;border:1.5px solid rgba(74,72,67,.45);border-radius:999px;padding:3px 13px;cursor:pointer;line-height:1.3;white-space:nowrap}
+.calc-bt:hover{color:var(--laranja);border-color:var(--laranja)}
+.calc-bt.calc-q{width:30px;height:28px;padding:0;font-size:18px;font-weight:700;line-height:1}
+.calc-ctrl strong{min-width:46px;text-align:center;color:var(--tinta);font-weight:800;font-size:15px}
+.calc-sep{width:1.5px;height:20px;background:rgba(74,72,67,.3);margin:0 4px}
+
+/* ——— cartões ——— */
+.calc-card{border:2px solid var(--tinta);border-radius:var(--raio);background:var(--branco);min-width:0}
+
+/* ——— seu hotel ——— */
+.calc-hotel{padding:20px clamp(16px,1.6vw,24px) 18px;display:flex;flex-direction:column;container-type:inline-size}
+.calc-grp{display:flex;flex-direction:column;gap:8px}
+.calc-grp + .calc-grp{margin-top:16px;padding-top:16px;border-top:1.5px solid rgba(29,29,27,.14)}
+.calc-gt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--laranja)}
+.calc-gt small{font-size:14px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--cinza)}
+.calc-ctl{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(76px,104px);column-gap:12px;align-items:center;min-height:44px}
+.calc-ctl > .calc-lab{min-width:92px}
+.calc-lab{font-size:15px;font-weight:600;color:var(--cinza);white-space:nowrap}
+.calc-range{-webkit-appearance:none;appearance:none;width:100%;height:30px;margin:0;background:transparent;cursor:pointer;--p:50%}
+.calc-range::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(to right,var(--laranja) 0,var(--laranja) var(--p),rgba(29,29,27,.13) var(--p),rgba(29,29,27,.13) 100%)}
+.calc-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:var(--branco);border:2.5px solid var(--tinta);margin-top:-8px;box-sizing:border-box}
+.calc-range::-moz-range-track{height:8px;border-radius:4px;background:rgba(29,29,27,.13)}
+.calc-range::-moz-range-progress{height:8px;border-radius:4px;background:var(--laranja)}
+.calc-range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--branco);border:2.5px solid var(--tinta)}
+.calc-range:focus{outline:none}
+.calc-range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(249,123,85,.35)}
+.calc-num{display:flex;align-items:baseline;gap:3px;border-bottom:2.5px solid var(--tinta);padding:0 2px 1px;min-width:0}
+.calc-num:focus-within{border-bottom-color:var(--laranja)}
+.calc-pre,.calc-suf{font-size:15px;font-weight:700;color:var(--cinza);flex:none}
+.calc-in,.calc-pin{min-width:0;border:0;background:transparent;font-family:inherit;font-weight:800;color:inherit;text-align:right;padding:0;margin:0;letter-spacing:-0.01em;border-radius:0}
+.calc-in{flex:1;width:100%;font-size:26px;line-height:1.15}
+.calc-in:focus,.calc-pin:focus{outline:none;color:var(--laranja)}
+.calc-pilha{display:flex;height:24px;border-radius:8px;overflow:hidden;background:rgba(29,29,27,.08)}
+.calc-seg{height:100%;transition:width .25s ease-out}
+.calc-seg[data-k="direta"],.calc-ponto[data-k="direta"]{background:var(--laranja)}
+.calc-seg[data-k="otas"],.calc-ponto[data-k="otas"]{background:var(--tinta)}
+.calc-seg[data-k="oper"],.calc-ponto[data-k="oper"]{background:#8F8A83}
+.calc-seg[data-k="outros"],.calc-ponto[data-k="outros"]{background:#D6CCC8}
+.calc-canais{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 14px}
+.calc-canal{display:flex;flex-direction:column;gap:2px;min-width:0}
+.calc-canal .calc-lab{display:flex;align-items:center;gap:6px;font-size:14px}
+.calc-ponto{width:10px;height:10px;border-radius:3px;flex:none}
+.calc-duas{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
+.calc-duas .calc-canal{display:grid;grid-template-columns:minmax(0,1fr) minmax(64px,88px);align-items:end;column-gap:10px}
+.calc-pe{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1.5px solid rgba(29,29,27,.14);padding-top:14px}
+.calc-grp:has(+ .calc-pe){margin-bottom:16px}
+.calc-pe small{display:block;font-size:14px;color:var(--cinza);font-weight:600}
+.calc-pe strong{display:block;font-size:24px;font-weight:800;line-height:1.1;white-space:nowrap}
+.calc-bts{display:flex;gap:8px;align-items:center}
+
+/* hotel estreito (coluna do desktop, celular): canais em 2×2 */
+@container (max-width:430px){
+  .calc-canais{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* bem estreito (celular): rótulo e número em cima, barra embaixo ocupando a largura */
+@container (max-width:330px){
+  .calc-ctl{grid-template-columns:minmax(0,1fr) minmax(84px,112px);grid-template-areas:"lab num" "range range";row-gap:2px;min-height:0}
+  .calc-ctl > .calc-lab{grid-area:lab;min-width:0}
+  .calc-ctl > .calc-range{grid-area:range}
+  .calc-ctl > .calc-num{grid-area:num}
+  .calc-duas{column-gap:16px}
+  .calc-duas .calc-canal{display:flex;flex-direction:column;align-items:stretch}
+}
+
+/* ——— cenários ——— */
+.calc-cen{padding:20px clamp(16px,1.5vw,22px);display:flex;flex-direction:column;container-type:inline-size}
+.calc-cen.calc-escuro{background:var(--tinta);color:var(--creme)}
+.calc-nome{font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.calc-escuro .calc-nome{color:var(--laranja)}
+.calc-prems{margin-top:14px;background:rgba(29,29,27,.05);border-radius:var(--raio-p);padding:4px 14px}
+/* premissas por cenário no PÉ do card (como no deck) */
+.calc-cen .calc-prems{order:1;margin-top:14px}
+.calc-escuro .calc-prems{background:rgba(241,233,231,.08)}
+.calc-pr{display:flex;align-items:center;justify-content:space-between;gap:8px;height:36px;font-size:14px;font-weight:600;color:var(--cinza)}
+.calc-pr + .calc-pr{border-top:1.5px solid rgba(29,29,27,.09)}
+.calc-escuro .calc-pr{color:rgba(241,233,231,.75)}
+.calc-escuro .calc-pr + .calc-pr{border-top-color:rgba(241,233,231,.12)}
+.calc-pv{display:flex;align-items:baseline;gap:3px;color:var(--tinta)}
+.calc-escuro .calc-pv{color:var(--creme)}
+.calc-pv i{font-style:normal;font-size:17px;font-weight:800}
+.calc-pin{width:36px;font-size:20px;line-height:1.1;border-bottom:2px dashed rgba(249,123,85,.7);cursor:text}
+.calc-pv span{font-size:14px;font-weight:700;min-width:28px}
+.calc-g{margin-top:26px;display:flex;align-items:baseline;gap:5px;white-space:nowrap}
+.calc-grs,.calc-gu{font-size:20px;font-weight:800}
+/* número grande: serif itálica laranja; tamanho segue a largura do cartão (o deck: 112px num cartão de ~345px) */
+.calc-gn,.calc-esp-n{font-family:var(--serif);font-style:italic;font-weight:800;font-variation-settings:"opsz" 144;line-height:.9;letter-spacing:-0.02em;font-size:min(112px,34cqi)}
+.calc-gn{color:var(--laranja);font-variant-numeric:tabular-nums}
+/* número longo encolhe na mesma proporção do deck (84 · 76 · 64 de 112) */
+.calc-gn[data-tam="3"]{font-size:min(84px,25.5cqi)}
+.calc-gn[data-tam="4"]{font-size:min(76px,23cqi)}
+.calc-gn[data-tam="5"]{font-size:min(64px,19.4cqi)}
+.calc-gsub{font-size:14px;color:var(--cinza);margin-top:6px}
+.calc-escuro .calc-gsub{color:rgba(241,233,231,.72)}
+.calc-gsub b{font-weight:800;color:var(--tinta)}
+.calc-escuro .calc-gsub b{color:var(--creme)}
+.calc-lins{margin-top:auto;display:flex;flex-direction:column;gap:9px;border-top:1.5px solid rgba(29,29,27,.14);padding-top:14px}
+.calc-gsub{margin-bottom:22px}
+.calc-pend .calc-esp{margin-bottom:22px}
+.calc-escuro .calc-lins{border-top-color:rgba(241,233,231,.2)}
+.calc-lt{font-size:14px;font-weight:600;color:var(--cinza);white-space:nowrap}
+.calc-escuro .calc-lt{color:rgba(241,233,231,.78)}
+.calc-lb{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px;margin-top:2px}
+.calc-lv{font-weight:800;font-size:15px;white-space:nowrap;min-width:72px;text-align:right}
+.calc-barra{height:8px;border-radius:5px;background:rgba(29,29,27,.08);overflow:hidden}
+.calc-escuro .calc-barra{background:rgba(241,233,231,.12)}
+.calc-barra i{display:block;height:100%;min-width:5px;border-radius:5px;background:var(--tinta);transition:width .25s ease-out}
+.calc-escuro .calc-barra i{background:var(--creme)}
+.calc-lin[data-f="dm"] .calc-barra i{background:var(--laranja)}
+.calc-lin[data-f="com"] .calc-barra i{background:#8F8A83}
+.calc-aviso{margin:14px 0 0;font-size:13px;line-height:1.4;color:var(--cinza)}
+
+/* ——— abre vazia; só mostra valores depois de "Confirmar" ——— */
+.calc-bt.calc-ok{background:var(--laranja);border-color:var(--laranja);color:var(--branco);font-weight:700}
+.calc-bt.calc-ok:hover{background:var(--tinta);border-color:var(--tinta);color:var(--branco)}
+.calc-bt.calc-ok:disabled{background:transparent;border-color:rgba(74,72,67,.3);color:rgba(74,72,67,.55);cursor:default}
+.calc-bt.calc-ok.calc-feito:disabled{border-color:var(--laranja);color:var(--laranja)}
+.calc-esp{display:none}
+.calc-pend .calc-esp{display:block}
+.calc-pend .calc-g,.calc-pend .calc-gsub{display:none}
+.calc-cen .calc-esp{margin-top:26px}
+.calc-esp-n{display:block;color:rgba(29,29,27,.18)}
+.calc-escuro .calc-esp-n{color:rgba(241,233,231,.22)}
+.calc-esp-t{display:block;font-size:14px;color:var(--cinza);margin-top:6px}
+.calc-escuro .calc-esp-t{color:rgba(241,233,231,.72)}
+.calc-pend .calc-barra i{visibility:hidden}
+.calc-pend .calc-lv{color:rgba(74,72,67,.5)}
+.calc-pend .calc-escuro .calc-lv{color:rgba(241,233,231,.4)}
+.calc-pend .calc-pe strong{color:rgba(74,72,67,.5)}
+
+/* ——— 1100px: hotel em cima na largura toda, cenários em 3 abaixo ——— */
+@media (max-width:1100px){
+  .calc-main{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .calc-cab-hotel,.calc-hotel,.calc-cab-dir{grid-column:1 / -1}
+  .calc-cab-hotel{order:1}
+  .calc-hotel{order:2}
+  .calc-cab-dir{order:3;margin-top:14px}
+  .calc-cen{order:4}
+}
+/* ——— 720px: tudo empilhado ——— */
+@media (max-width:720px){
+  .calc-main{grid-template-columns:minmax(0,1fr)}
+  .calc-cab-dir{align-items:flex-start}
+  .calc-cen{padding:18px 18px 18px}
+}
+
+@media (prefers-reduced-motion:reduce){.calc-barra i,.calc-seg{transition:none}}

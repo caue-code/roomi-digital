@@ -1,0 +1,67 @@
+/* Roomi · peça "mapa" (quem confia): logos dos clientes ao redor do mapa do Brasil.
+   Portada do slide 08 do deck (variante 3b). Tokens em css/base.css. */
+
+.mapa{position:relative;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr);gap:clamp(12px,1.6vw,24px);align-items:center}
+
+/* ——— logos ——— */
+.mapa-logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(4px,.6vw,10px) clamp(6px,.8vw,12px);align-content:center}
+.mapa-logos .mapa-logo:nth-child(5){grid-column:1 / 3;justify-self:center;width:calc(50% - clamp(3px,.4vw,6px))}
+.mapa-logo{display:flex;align-items:center;justify-content:center;min-width:0;padding:6px 8px;margin:0;border:2px solid transparent;border-radius:var(--raio-p);background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color var(--t),opacity var(--t),transform var(--t)}
+.mapa-logo img{display:block;width:100%;max-width:200px;height:auto;pointer-events:none;user-select:none}
+.mapa-logo:hover{border-color:var(--fio-forte)}
+.mapa.foco .mapa-logo{opacity:.28}
+.mapa.foco .mapa-logo.on{opacity:1;border-color:var(--tinta);transform:scale(1.03)}
+.mapa-logo.fixo{border-color:var(--tinta)}
+
+/* ——— mapa ——— */
+.mapa-lado{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.mapa-svg{display:block;width:100%;height:auto;max-width:600px;overflow:visible}
+.mapa-ufs path{fill:var(--creme-esc);stroke:var(--creme);stroke-width:2;stroke-linejoin:round}
+.mapa-ponto{fill:var(--laranja);stroke:var(--tinta);stroke-width:3px;r:13px}
+.mapa-halo{fill:var(--laranja);opacity:0;r:28px}
+.mapa-pino{cursor:pointer;transition:opacity var(--t);-webkit-tap-highlight-color:transparent}
+.mapa.foco .mapa-pino{opacity:.18}
+.mapa.foco .mapa-pino.on{opacity:1}
+.mapa-pino.on .mapa-halo{opacity:.22}
+
+@media (prefers-reduced-motion:no-preference){
+  .mapa--js:not(.mapa--viva) .mapa-ponto{opacity:0}
+  .mapa--viva .mapa-ponto{animation:mapaCai .55s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(.25s + var(--i) * .12s);transform-box:fill-box;transform-origin:center}
+  .mapa--ativa .mapa-pino.on .mapa-halo{animation:mapaPulso 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+}
+@keyframes mapaCai{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes mapaPulso{0%{transform:scale(.55);opacity:.4}100%{transform:scale(1.25);opacity:0}}
+
+/* ——— cartão do cliente (logo) ——— */
+/* no desktop fica no canto de cima à esquerda do mapa (Norte), onde não há pino */
+.mapa-cartao{position:absolute;top:0;left:0;width:min(300px,62%);transform:translateY(-8px);z-index:4;background:var(--branco);border:2px solid var(--tinta);border-radius:var(--raio-p);padding:14px 18px;line-height:1.35;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--t),transform var(--t),visibility var(--t)}
+.mapa-cartao.on{opacity:1;visibility:visible;transform:none}
+.mapa-cartao-nome{display:block;font-size:clamp(17px,1.35vw,21px);font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.mapa-cartao-meta{display:block;margin-top:6px;color:var(--laranja);font-size:13.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.3}
+.mapa-cartao-frase{display:block;margin-top:8px;color:var(--tinta-2);font-size:15px;line-height:1.4}
+.mapa-cartao-frase:empty{display:none}
+
+/* ——— dica do pino ——— */
+.mapa-dica{position:absolute;left:0;top:0;z-index:5;width:min(300px,100%);background:var(--branco);border:2px solid var(--tinta);border-radius:var(--raio-p);padding:12px 14px;font-size:14.5px;line-height:1.4;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s}
+.mapa-dica.on{opacity:1;visibility:visible}
+.mapa-dica b{display:block;font-size:16px;font-weight:800;line-height:1.25}
+.mapa-dica-g{display:block;margin-top:6px;color:var(--laranja);font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+
+/* ——— intermediário: colunas de logos mais estreitas ——— */
+@media (max-width:1100px){
+  .mapa{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr)}
+  .mapa-logo{padding:4px}
+}
+
+/* ——— celular: mapa em cima, cartão abaixo dele, 10 logos em 2 colunas ——— */
+@media (max-width:720px){
+  .mapa{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;align-items:stretch}
+  .mapa-lado{grid-column:1 / -1;order:-1}
+  .mapa-logos{display:contents}
+  .mapa-logos .mapa-logo:nth-child(5){grid-column:auto;justify-self:stretch;width:auto}
+  .mapa-logo{padding:2px 4px;border-radius:14px}
+  .mapa-logo img{max-width:170px}
+  .mapa-cartao{position:static;width:100%;transform:none;margin-top:12px;display:none}
+  .mapa-cartao.on{display:block;transform:none}
+  .mapa-dica{width:min(260px,100%);font-size:14px}
+}
