@@ -225,7 +225,7 @@ a.embarcado:hover{background:var(--tinta-3)}
 .calc-exemplo{height:34px;padding:0 14px;border:1.5px solid var(--laranja);border-radius:999px;background:var(--pessego-2);color:var(--tinta);font-size:13.5px;font-weight:600;cursor:pointer;transition:background-color var(--t)}
 .calc-exemplo:hover{background:var(--laranja)}
 
-/* ——— 7 · quem somos + pesquisas ——— */
+/* ——— quem somos + entregáveis ——— */
 .pessoas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .pessoa{display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px;padding:22px;background:var(--creme-2);border:1px solid var(--fio);border-radius:var(--raio-g)}
 .pessoa img{width:96px;height:96px;border-radius:50%;object-fit:cover}
@@ -233,15 +233,18 @@ a.embarcado:hover{background:var(--tinta-3)}
 .pessoa h3 span{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--laranja-esc)}
 .pessoa p{font-size:14.5px;line-height:1.55;color:var(--cinza)}
 .pessoa p b{font-weight:600;color:var(--tinta)}
-.pesq{margin-top:clamp(40px,4vw,56px);padding-top:clamp(28px,3vw,40px);border-top:1px solid var(--fio)}
-.pesq-cab{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;margin-bottom:18px}
-.pesq-cab h3{font-size:22px}
-.pesq-cab p{color:var(--cinza-2);font-size:14.5px}
-.pesq-l{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
-.pesq-l li{display:flex;flex-direction:column;gap:4px}
-.pesq-l img{width:100%;aspect-ratio:16 / 9;object-fit:cover;border-radius:var(--raio-p);border:1px solid var(--fio);margin-bottom:8px}
-.pesq-l b{font-size:14.5px;font-weight:600;line-height:1.3}
-.pesq-l small{font-size:12.5px;color:var(--cinza-2)}
+/* entregáveis: abas em pílulas + grade de capas */
+.abas--chips .abas-l{flex-wrap:wrap;gap:8px;padding:0;background:none;border:0;border-radius:0;overflow:visible}
+.abas--chips .abas-l [role=tab]{flex-direction:row;align-items:baseline;gap:7px;min-width:0;padding:8px 14px;border:1px solid var(--fio-forte);border-radius:999px;font-size:14.5px;font-weight:500;color:var(--cinza)}
+.abas--chips .abas-l [role=tab] small{font-size:12px;color:var(--cinza-2)}
+.abas--chips .abas-l [role=tab]:hover{background:var(--creme-2);color:var(--tinta)}
+.abas--chips .abas-l [role=tab][aria-selected=true]{background:var(--tinta);border-color:var(--tinta);color:var(--creme);box-shadow:none}
+.abas--chips .abas-l [role=tab][aria-selected=true] small{color:var(--laranja)}
+.ent-l{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px 14px}
+.ent-l li{display:flex;flex-direction:column;gap:3px}
+.ent-l img{width:100%;aspect-ratio:16 / 9;object-fit:cover;border-radius:var(--raio-p);border:1px solid var(--fio);margin-bottom:8px;background:var(--tinta)}
+.ent-l b{font-size:14.5px;font-weight:600;line-height:1.3}
+.ent-l small{font-size:12.5px;color:var(--cinza-2)}
 
 /* ——— contato + rodapé ——— */
 .contato{background:var(--laranja);color:var(--tinta)}
@@ -264,7 +267,7 @@ a.embarcado:hover{background:var(--tinta-3)}
   .res-g{grid-template-columns:minmax(0,1fr)}
   .dentro{grid-template-columns:minmax(0,1fr)}
   .dentro-txt{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .pesq-l{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ent-l{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:1000px){
   .topo-nav{position:absolute;top:var(--topo-h);left:0;right:0;flex-direction:column;gap:0;padding:8px var(--pad) 16px;background:var(--tinta);border-bottom:1px solid var(--fio-c);display:none}
@@ -316,8 +319,9 @@ a.embarcado:hover{background:var(--tinta-3)}
   .dentro-txt{grid-template-columns:minmax(0,1fr)}
   .pessoa{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:18px}
   .pessoa img{width:64px;height:64px}
-  .pesq-l{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(var(--pad) * -1);padding-inline:var(--pad);scroll-padding-inline:var(--pad);scrollbar-width:none}
-  .pesq-l li{scroll-snap-align:start}
+  .ent-l{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}
+  .abas--chips .abas-l{display:flex}
+  .abas--chips .abas-l [role=tab]{padding:7px 12px;font-size:13.5px}
   .pessoa{align-items:center}
   .pessoa > div{display:contents}
   .pessoa h3{margin-bottom:0}
