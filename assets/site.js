@@ -21,6 +21,20 @@
   document.addEventListener('focusin', pre);
 })();
 
+// "Carregando" sutil ao trocar de página (14/10): no clique num link interno de página, html.carregando (linha no topo e
+// página esmaecida, base.css). Sai sozinho se a navegação não acontecer em 8 s e ao voltar pelo histórico (pageshow).
+(() => {
+  const h = document.documentElement; let t;
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button > 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank' || a.hasAttribute('download')) return;
+    if (a.origin !== location.origin || !/\.html$|\/$/.test(a.pathname) || (a.pathname === location.pathname && a.hash)) return;
+    h.classList.add('carregando'); clearTimeout(t); t = setTimeout(() => h.classList.remove('carregando'), 8000);
+  });
+  addEventListener('pageshow', () => { h.classList.remove('carregando'); clearTimeout(t); });
+  addEventListener('pagehide', () => h.classList.remove('carregando'));
+})();
+
 // Abas genéricas: [data-abas] com [role=tablist] > [role=tab][aria-controls]. Setas trocam de aba.
 // Sem JS, todos os painéis aparecem (o HTML não nasce com hidden; quem esconde é este script).
 (() => {
