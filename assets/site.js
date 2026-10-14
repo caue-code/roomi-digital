@@ -1092,7 +1092,9 @@ if (cr) {
 
   // a linha da grade sob o mouse acende (atividade, barra, reuniões e quem), junto com a semana que já seguia o mouse
   const linhaSob = $('.cr-linha');
-  const porLinha = $$('.cr-g > [style*="grid-row"]').filter(n => !/\//.test(n.getAttribute('style').match(/grid-row:([^;]*)/)[1])).map(n => ({ n, r: parseInt(n.style.gridRowStart, 10) }));
+  // só os itens de uma linha (sem "3 / 5"). Lê pela propriedade, não pelo texto do style: o Safari reescreve
+  // "grid-row: 3" como "grid-row-start: 3; grid-row-end: auto" e a expressão antiga dava null e derrubava o cronograma no iPhone (14/10)
+  const porLinha = $$('.cr-g > [style*="grid-row"]').filter(n => { const fim = n.style.gridRowEnd; return !fim || fim === 'auto'; }).map(n => ({ n, r: parseInt(n.style.gridRowStart, 10) }));
   let rSob = 0;
   const marcaLinha = r => {
     if (r === rSob || !g) return;

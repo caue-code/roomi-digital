@@ -206,6 +206,8 @@ p,ul,ol,figure{margin:0}
   .cta-pe a{white-space:normal}
 }
 
+@media (max-width:900px){.cta-pe{display:none}}
+
 
 
 @font-face{font-family:"Editorial New";src:url(fontes-heitor/EditorialNew-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -598,8 +600,11 @@ main a.ac-faixa[id]{scroll-margin-top:0}
   
   .ac-nav{display:none}
   .ac-in{padding-top:64px;grid-template-rows:1fr}
-  .ac-meio{grid-template-columns:1fr;gap:28px;padding-block:18px 26px}
-  .ac h1{max-width:none}
+  .ac-meio{grid-template-columns:1fr;gap:28px;padding-block:4px 26px} 
+  
+  .ac-selo{white-space:nowrap;max-width:100%;font-size:clamp(10.5px,3.2vw,14px);padding:6px 11px 6px 10px;gap:7px;letter-spacing:-.01em}
+  .ac-selo i{width:7px;height:7px;box-shadow:0 0 0 3px rgba(249,123,85,.18)}
+  .ac h1{max-width:none;margin-top:clamp(10px,2vh,16px)}
   .ac-palco-in{min-height:0;padding:18px 16px 20px;border-radius:22px}
   .ac .ac-tela{margin:34px auto 0;transform:none}
   .ac-cena{display:none}
@@ -628,6 +633,8 @@ main a.ac-faixa[id]{scroll-margin-top:0}
   .ac .ac-tela{transform:none}
   .ac .ab-tela *,.ac .ab-tela *::after{transition:none!important;animation:none!important}
 }
+
+@media (max-width:900px){.ac-prova{display:none}}
 
 
 
@@ -881,6 +888,8 @@ main a.ab-faixa[id]{scroll-margin-top:0}
   .cl-nums dt span{font-size:13px}
 }
 
+@media (max-width:900px){.cl-lead{display:none}}
+
 
 
 .pq{position:relative;min-height:100svh;display:flex;overflow:hidden;isolation:isolate;background:#F7F1EC;color:#1D1D1B;
@@ -1065,6 +1074,8 @@ main a.ab-faixa[id]{scroll-margin-top:0}
 
 
 @media (max-width:900px){
+  
+  .pq{display:none}
   .pq{min-height:0;padding-block:36px 40px}
   .pq-in{min-height:0;gap:18px}
   .pq-topo{grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
@@ -2209,6 +2220,8 @@ main a.ab-faixa[id]{scroll-margin-top:0}
   .cm.cm-js .cm-capas li,.cm.cm-js .cm-rot{opacity:1;transform:none}
 }
 
+@media (max-width:900px){.cm-lead{display:none}}
+
 
 
 .pd{position:relative;min-height:100svh;display:flex;overflow:hidden;isolation:isolate;background:#FCF9F6;color:#1D1D1B;
@@ -2345,6 +2358,8 @@ main a.ab-faixa[id]{scroll-margin-top:0}
   .pd-txt p{font-size:13.5px}
   .pd-selo{font-size:12px;padding:5px 8px}
 }
+
+@media (max-width:900px){.pd-grupo[aria-labelledby="pd-g2"]{display:none}}
 
 
 
@@ -2645,6 +2660,8 @@ body:not(.pg-apresentacao) .fn-mail{display:none}
 @media (prefers-reduced-motion:reduce){
   .fn-capa,.fn-capa-s i{animation:none}
 }
+
+@media (max-width:900px){.fn-vis{display:none}}
 
 
 
@@ -4141,6 +4158,8 @@ section.qs.pronto .qs-cena{animation:qs-boia 9s ease-in-out 2s infinite alternat
   .r1-live i,.r1-luz{animation:none}
   .r1 .r1-tela{transform:none}
 }
+
+@media (max-width:900px){.r1-palco,.r1-desc{display:none}}
 
 
 
