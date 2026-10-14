@@ -1,0 +1,26 @@
+AMOSTRAS DOS ENTREGÁVEIS (visor "Experimente nossos entregáveis", quadro 8 da home)
+
+Onde pôr: os modelos em HTML ficam nesta pasta, site-src/estatico/amostras/.
+O montador (tools/montar.mjs) copia site-src/estatico/ para a raiz do site, então
+cada arquivo aparece em <site>/amostras/<nome>.html.
+
+Nomes esperados (um arquivo por modelo, exatamente assim):
+  presenca-digital.html       Análise de Presença Digital
+  historico-resultados.html   Análise Histórica de Resultados
+  plano-de-acao.html          Plano de Ação
+
+Enquanto a linha do modelo em MODELOS não tem pronto: true, o visor mostra a capa "Modelo em preparação"
+e não pede nada ao servidor. Com pronto: true e o arquivo nesta pasta, o visor carrega o modelo e mostra o
+botão "Abrir em tela cheia".
+
+Cada modelo deve ser um HTML que funciona sozinho: CSS e JS dentro do arquivo ou em
+arquivos ao lado dele, com caminho relativo (ex.: uma imagem em
+amostras/presenca-digital/foto.webp entra no HTML como src="presenca-digital/foto.webp").
+O visor mostra o modelo no tamanho natural dele (cerca de 540 px de largura no desktop,
+350 px no celular), então o ideal é o modelo ser responsivo. Se não for, ponha
+largura: <px> na linha dele em MODELOS e o visor desenha o modelo nessa largura, reduzido para caber.
+Use só dados fictícios ou de hotel anônimo.
+
+Pra pôr no ar um dos 3 modelos acima: suba o HTML aqui e acrescente pronto: true na linha dele na lista
+MODELOS, no topo de site-src/secoes/08-final.js. Modelo novo: suba o HTML e escreva uma linha nova em MODELOS,
+já com pronto: true (slug = nome do arquivo sem .html, nome, etapa, descrição; largura é opcional).
