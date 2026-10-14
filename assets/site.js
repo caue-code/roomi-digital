@@ -1670,7 +1670,9 @@ if (dlg && C) {
     document.documentElement.classList.add('cv-trava');
     if (barra > 0) document.body.style.paddingRight = barra + 'px';
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
-    vai(atual, true);
+    // data-conversa="3" abre direto na calculadora (a chamada da home no celular); sem valor, abre onde parou
+    const p = gatilho && gatilho.dataset && /^[123]$/.test(gatilho.dataset.conversa) ? +gatilho.dataset.conversa : atual;
+    vai(p, true);
   };
   const solta = () => {
     document.documentElement.classList.remove('cv-trava');
